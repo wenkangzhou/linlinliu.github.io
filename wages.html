@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Lynn</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="shortcut icon" type="image/x-icon" href="images/avatar.jpg">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">        
+    </head>
+    <body>
+    	<label>请输入本月课时：</label><input type="text" id="count"><input type="button" value="计算" onclick="result()">
+    	<p>
+    		<span id="result">
+
+    		</span>
+    	</P>
+    	<script type="text/javascript">
+    		function result(){
+    			var count = document.getElementById("count").value;
+    			var re = /^\+?[1-9][0-9]*$/;
+    			if (!re.test(count)) 
+				{ 
+					alert("姐，请输入整数好划！！！"); 
+					document.getElementById("count").focus(); 
+					return false; 
+				} 
+    			if(count<40){
+    				alert("哼，我不信才这么点课！！！"); 
+					document.getElementById("count").focus(); 
+					return false; 
+    			}
+    			if(count>200){
+    				alert("哼，我不信有这么多课！！！"); 
+					document.getElementById("count").focus(); 
+					return false; 
+    			}
+    			var result = (count-30)*110+4220;//总工资=课时费+基本工资+餐补
+    			result = result-315.00-210.00;// 扣除社保和公积金
+    			var tax=personalTaxNow(result);
+    			var finalWages = result-tax;
+    			var msg = "";
+    			if(finalWages<=7000){
+    				msg = "这个月钱不多，省着点花哈！";
+    			}else if(finalWages<=10000){
+    				msg = "这个月中规中矩，不买大件，日子可以过的杠杠的！";
+    			}else if(finalWages<=13000){
+    				msg = "这个月钱有点多，辛苦了，犒劳一下自己吧！";
+    			}else{
+    				msg = "这个月钱有点太多了吧，赶快请客，赶！快！！！";
+    			}
+    			var str = "收入总额："+result+"<br>";
+    				str +="扣除社保：315(此处以最后公布信息为准)<br>";
+    				str +="扣除公积金：210<br>";
+    				str +="应缴税款："+tax+"<br>";
+    				str +="税后收入：<b><font color=red>"+finalWages+"</font></b><br>";
+    				str +="本月寄语："+msg;
+    			document.getElementById("result").innerHTML=str;
+    		}
+
+    		function personalTaxNow(result)
+	        {
+	            var L = result - 3500;
+	            if(L <= 0)
+	            {
+	                return 0;
+	            }
+	            var R,K;
+	            if(L <= 1500)
+	            {
+	                R = 0.03;K = 0;
+	            } else if(L <= 4500)
+	            {
+	                R = 0.1;K = 105;
+	            } else if(L <= 9000)
+	            {
+	                R = 0.2;K = 555;
+	            } else if(L <= 35000)
+	            {
+	                R = 0.25;K = 1005;
+	            } else if(L <= 55000)
+	            {
+	                R = 0.3;K = 2755;
+	            } else if(L <= 80000)
+	            {
+	                R = 0.35;K = 5505;
+	            } else
+	            {
+	                R = 0.45;K = 13505;
+	            }
+	            return Math.round(L * R - K,2);
+	        }
+    	</script>
+    </body>
+</html>
