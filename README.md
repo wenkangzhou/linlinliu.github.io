@@ -1,1 +1,1 @@
-http://lynneliu.com
+blog for lynn 
